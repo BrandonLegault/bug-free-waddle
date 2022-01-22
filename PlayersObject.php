@@ -18,16 +18,10 @@
 */
 
 include_once 'Helper.php';
+include_once 'IPlayer.php';
 include_once './dataFormat/Format.php';
 
-
-interface IReadWritePlayers {
-    function readPlayers($source, $filename = null);
-    function writePlayer($source, $player, $filename = null);
-    function display($isCLI, $course, $filename = null);
-}
-
-class PlayersObject implements IReadWritePlayers {
+class PlayersObject implements IPlayer {
 
     private $playersArray;
 
