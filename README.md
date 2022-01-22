@@ -1,5 +1,8 @@
 Development Exercise
 
+
+  ---testing if git setup is working---
+
   Please create a branch of this repository to complete your task. Name the branch whatever you like. When complete, open a Pull Request back to the master branch of this repository.
   
   The following code is poorly designed and error prone. Refactor the objects below to follow a more SOLID design.
