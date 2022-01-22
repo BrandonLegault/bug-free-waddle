@@ -17,6 +17,8 @@
 
 */
 
+include_once 'Helper.php';
+
 
 interface IReadWritePlayers {
     function readPlayers($source, $filename = null);
@@ -30,12 +32,17 @@ class PlayersObject implements IReadWritePlayers {
 
     private $playerJsonString;
 
+    //helper class for reading data
+    private $helper; 
+
     public function __construct() {
         //We're only using this if we're storing players as an array.
         $this->playersArray = [];
 
         //We'll only use this one if we're storing players as a JSON string
         $this->playerJsonString = null;
+
+        $this->helper = Helper::getInstance();
     }
 
     /**
@@ -48,14 +55,16 @@ class PlayersObject implements IReadWritePlayers {
 
         switch ($source) {
             case 'array':
-                $playerData = $this->getPlayerDataArray();
+                $playerData = $this->helper->getPlayerDataArray();
                 break;
             case 'json':
-                $playerData = $this->getPlayerDataJson();
+                $playerData = $this->helper->getPlayerDataJson();
                 break;
             case 'file':
-                $playerData = $this->getPlayerDataFromFile($filename);
+                $playerData = $this->helper->getPlayerDataFromFile($filename);
                 break;
+            default:
+                throw new Exception('Unknown source');
         }
 
         if (is_string($playerData)) {
@@ -95,56 +104,17 @@ class PlayersObject implements IReadWritePlayers {
         }
     }
 
-
-    function getPlayerDataArray() {
-
-        $players = [];
-
-        $jonas = new \stdClass();
-        $jonas->name = 'Jonas Valenciunas';
-        $jonas->age = 26;
-        $jonas->job = 'Center';
-        $jonas->salary = '4.66m';
-        $players[] = $jonas;
-
-        $kyle = new \stdClass();
-        $kyle->name = 'Kyle Lowry';
-        $kyle->age = 32;
-        $kyle->job = 'Point Guard';
-        $kyle->salary = '28.7m';
-        $players[] = $kyle;
-
-        $demar = new \stdClass();
-        $demar->name = 'Demar DeRozan';
-        $demar->age = 28;
-        $demar->job = 'Shooting Guard';
-        $demar->salary = '26.54m';
-        $players[] = $demar;
-
-        $jakob = new \stdClass();
-        $jakob->name = 'Jakob Poeltl';
-        $jakob->age = 22;
-        $jakob->job = 'Center';
-        $jakob->salary = '2.704m';
-        $players[] = $jakob;
-
-        return $players;
-
-    }
-
-    function getPlayerDataJson() {
-        $json = '[{"name":"Jonas Valenciunas","age":26,"job":"Center","salary":"4.66m"},{"name":"Kyle Lowry","age":32,"job":"Point Guard","salary":"28.7m"},{"name":"Demar DeRozan","age":28,"job":"Shooting Guard","salary":"26.54m"},{"name":"Jakob Poeltl","age":22,"job":"Center","salary":"2.704m"}]';
-        return $json;
-    }
-
-    function getPlayerDataFromFile($filename) {
-        $file = file_get_contents($filename);
-        return $file;
-    }
-
     function display($isCLI, $source, $filename = null) {
 
-        $players = $this->readPlayers($source, $filename);
+        try {
+            $players = $this->readPlayers($source, $filename);
+          }
+          //catch exception of unknown source
+          catch(Exception $e) {
+            echo 'Message: ' .$e->getMessage();
+            return;
+          }
+       
 
         if ($isCLI) {
             echo "Current Players: \n";
@@ -193,9 +163,5 @@ class PlayersObject implements IReadWritePlayers {
     }
 
 }
-
-$playersObject = new PlayersObject();
-
-$playersObject->display(php_sapi_name() === 'cli', 'array');
 
 ?>
