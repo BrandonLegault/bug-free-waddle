@@ -18,6 +18,7 @@
 */
 
 include_once 'Helper.php';
+include_once './dataFormat/Format.php';
 
 
 interface IReadWritePlayers {
@@ -31,9 +32,14 @@ class PlayersObject implements IReadWritePlayers {
     private $playersArray;
 
     private $playerJsonString;
+    
 
     //helper class for reading data
     private $helper; 
+
+    // For Formatting data
+    private $dataFormat;
+    
 
     public function __construct() {
         //We're only using this if we're storing players as an array.
@@ -42,7 +48,9 @@ class PlayersObject implements IReadWritePlayers {
         //We'll only use this one if we're storing players as a JSON string
         $this->playerJsonString = null;
 
+        // getting the instance
         $this->helper = Helper::getInstance();
+        $this->dataFormat = Format::GetFormat();
     }
 
     /**
@@ -51,28 +59,16 @@ class PlayersObject implements IReadWritePlayers {
      * @return string json
      */
     function readPlayers($source, $filename = null) {
-        $playerData = null;
 
-        switch ($source) {
-            case 'array':
-                $playerData = $this->helper->getPlayerDataArray();
-                break;
-            case 'json':
-                $playerData = $this->helper->getPlayerDataJson();
-                break;
-            case 'file':
-                $playerData = $this->helper->getPlayerDataFromFile($filename);
-                break;
-            default:
-                throw new Exception('Unknown source');
-        }
-
-        if (is_string($playerData)) {
-            $playerData = json_decode($playerData);
-        }
-
+        $playerData = [];
+        try {
+                $playerData =  $this->helper->getdata($source,$filename);
+          }
+          //catch exception of unknown source
+          catch(Exception $e) {
+            return throw new Exception ("Unknown Source");
+          }
         return $playerData;
-
     }
 
     /**
@@ -106,60 +102,18 @@ class PlayersObject implements IReadWritePlayers {
 
     function display($isCLI, $source, $filename = null) {
 
-        try {
+        try
+        {
             $players = $this->readPlayers($source, $filename);
-          }
+        }
           //catch exception of unknown source
-          catch(Exception $e) {
+        catch(Exception $e) 
+        {
             echo 'Message: ' .$e->getMessage();
             return;
-          }
-       
-
-        if ($isCLI) {
-            echo "Current Players: \n";
-            foreach ($players as $player) {
-
-                echo "\tName: $player->name\n";
-                echo "\tAge: $player->age\n";
-                echo "\tSalary: $player->salary\n";
-                echo "\tJob: $player->job\n\n";
-            }
-        } else {
-
-            ?>
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <style>
-                    li {
-                        list-style-type: none;
-                        margin-bottom: 1em;
-                    }
-                    span {
-                        display: block;
-                    }
-                </style>
-            </head>
-            <body>
-            <div>
-                <span class="title">Current Players</span>
-                <ul>
-                    <?php foreach($players as $player) { ?>
-                        <li>
-                            <div>
-                                <span class="player-name">Name: <?= $player->name ?></span>
-                                <span class="player-age">Age: <?= $player->age ?></span>
-                                <span class="player-salary">Salary: <?= $player->salary ?></span>
-                                <span class="player-job">Job: <?= $player->job ?></span>
-                            </div>
-                        </li>
-                    <?php } ?>
-                </ul>
-            </body>
-            </html>
-            <?php
         }
+       
+        echo $this->dataFormat->disp($isCLI,$players);
     }
 
 }
