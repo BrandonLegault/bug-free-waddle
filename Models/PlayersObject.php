@@ -21,17 +21,12 @@ $dir = dirname(__DIR__, 1);
 //$dir .='/data/Helper.php'
 include_once $dir.'/data/Helper.php';
 include_once 'IPlayer.php';
-//include_once $dir.'/dataFormat/Format.php';
 include_once $dir.'/dataFormat/CliFormat.php';
 include_once $dir.'/dataFormat/HtmlFormat.php';
 
 class PlayersObject implements IPlayer {
 
-    //private $playersArray;
-
-    //private $playerJsonString;
-    
-
+  
     //helper class for reading data
     private $helper; 
 
@@ -42,15 +37,9 @@ class PlayersObject implements IPlayer {
     
 
     public function __construct() {
-        //We're only using this if we're storing players as an array.
-        //$this->playersArray = [];
-
-        //We'll only use this one if we're storing players as a JSON string
-        //$this->playerJsonString = null;
 
         // getting the instance
         $this->helper = new Helper();
-        //$this->dataFormat = Format::GetFormat();
         $this->cliFormat = new CliFormat();
         $this->htmlFormat = new HtmlFormat();
     }
@@ -112,11 +101,11 @@ class PlayersObject implements IPlayer {
 
         if ($isCLI) 
         {
-          echo $this->cliFormat->disp($players);
+          echo $this->cliFormat->display($players);
         } 
         else
         {
-          echo $this->htmlFormat->disp($players);
+          echo $this->htmlFormat->display($players);
         }
     }
 

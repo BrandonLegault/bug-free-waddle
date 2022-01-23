@@ -3,7 +3,7 @@
 include_once 'IFormat.php';
 class HtmlFormat implements IFormat
 {
-   function disp($players): string
+   function display($players): string
    {
       $players_list = "";
       foreach ($players as $player) {

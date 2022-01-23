@@ -4,7 +4,7 @@ include_once 'IFormat.php';
 class CliFormat implements IFormat
 {
     
-   function disp($players): string
+   function display($players): string
    {
       $output = "Current Players: \n";
       foreach ($players as $player) {
