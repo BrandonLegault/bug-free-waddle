@@ -17,8 +17,8 @@
 
 */
 
-include_once 'Helper.php';
-include_once 'IPlayer.php';
+include_once './data/Helper.php';
+include_once './IPlayer.php';
 include_once './dataFormat/Format.php';
 
 class PlayersObject implements IPlayer {
@@ -43,7 +43,7 @@ class PlayersObject implements IPlayer {
         $this->playerJsonString = null;
 
         // getting the instance
-        $this->helper = Helper::getInstance();
+        $this->helper = new Helper();
         $this->dataFormat = Format::GetFormat();
     }
 
