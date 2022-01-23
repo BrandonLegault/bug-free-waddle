@@ -8,8 +8,10 @@ include_once 'JsonData.php';
 class Helper
 {
     //private static $instance = null;
-    public $datasource = null;
-    public $flag = 5;
+    public $arraysource = null;
+    public $jsonsource = null;
+    public $filesource = null;
+
 
     public function __construct()
     {
@@ -43,6 +45,9 @@ class Helper
         return self::$instance;
     }
 */
+
+    // if object already exist then return the data stored, currently file data will have errors because once a file object
+    // is created new filename object cannot be created. We can make a list to handle that. But That will have other problems, so I am leaving that part out for now.
     public function getData($source,$filename)
         {
 
@@ -50,18 +55,25 @@ class Helper
             switch ($source) 
             {
                 case 'array':
-                    $this->datasource = new ArrayData();
+                    if($this->arraysource == null)
+                        $this->arraysource = new ArrayData();
+                    $playerData = $this->arraysource->read();
                     break;
                 case 'json':
-                    $this->datasource = new JsonData();
+                    if($this->jsonsource == null)
+                        $this->jsonsource = new JsonData();
+                    $playerData = $this->jsonsource->read();
                     break;
                 case 'file':
-                    $this->datasource = new FileData($filename);
+                    if($this->filesource == null)
+                        $this->filesource = new FileData();
+
+                    $playerData = $this->filesource->read();
                     break;
                 default:
                     throw new Exception();
             }
-            $playerData = $this->datasource->read();
+            
             if (is_string($playerData)) 
             {
                 $playerData = json_decode($playerData);
