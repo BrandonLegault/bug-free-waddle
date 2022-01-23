@@ -19,7 +19,7 @@ $dhar->salary = '4.66m';
 
 
 
-$playersObject->writePlayer('file',$dhar);
+$playersObject->writePlayer('file',$dhar,$filename);
 
 $playersObject->display(php_sapi_name() === 'cli', 'file',$filename);
 

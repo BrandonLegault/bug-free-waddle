@@ -106,7 +106,7 @@ class Helper
                         $this->filesource = new FileData($filename);
                     
                     //appending to current data, if filename is different a new object is created (i am considereing this case for now)
-                    
+                    //echo strcmp( $this->filesource->getFileName(), $filename );
                    $this->filesource->write($player);
                     break;
                 default:
