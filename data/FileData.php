@@ -16,7 +16,12 @@ class FileData implements ISourceData
    {
       $this->path =  __DIR__ .'/'. $filename;
       //echo $this->path;
-      $raw = file_get_contents($this->path);
+      $raw = '';
+      if (file_exists($filename)) 
+         $raw .= file_get_contents($this->path);
+      else
+         file_put_contents($filename, '');
+     
       $this->filename = $filename;
       $this->data = $raw ? json_decode($raw) : [];
    }
