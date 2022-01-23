@@ -12,3 +12,15 @@ Development Exercise
 
   Note: The goal here is not 100% correctness, but instead a glimpse into how you
     approach refactoring/redesigning bad code. Commit often to your branch.
+
+
+
+    Task Completed. Thank you for this opportunity.
+
+    1. I have not changed the original interface.
+    2. Index.php is the entry point.
+    3. PlayersObject uses Helper class present in data folder to read and write in different sources.
+    4. It uses Format class in dataFormat folder to display contents according to the given format.
+
+
+PS. I forgot to create a new Branch after Forking.
