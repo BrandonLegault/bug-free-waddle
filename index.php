@@ -1,14 +1,14 @@
 <?php
 
-//entry point
+//entry point....calls PlayersObject present in Player
 
-include_once "./PlayersObject.php";
+include_once "./Player/PlayersObject.php";
 
 $playersObject = new PlayersObject();
 
-$filename = "playerdadta.json";
+$filename = "playerdata.json";
 
-$playersObject->display(php_sapi_name() === 'cli', 'file',$filename);
+$playersObject->display(php_sapi_name() === 'cli', 'json',$filename);
 
 
 $dhar = new \stdClass();

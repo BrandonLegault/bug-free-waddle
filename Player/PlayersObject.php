@@ -17,15 +17,17 @@
 
 */
 
-include_once './data/Helper.php';
-include_once './IPlayer.php';
-include_once './dataFormat/Format.php';
+$dir = dirname(__DIR__, 1);
+//$dir .='/data/Helper.php'
+include_once $dir.'/data/Helper.php';
+include_once 'IPlayer.php';
+include_once $dir.'/dataFormat/Format.php';
 
 class PlayersObject implements IPlayer {
 
-    private $playersArray;
+    //private $playersArray;
 
-    private $playerJsonString;
+    //private $playerJsonString;
     
 
     //helper class for reading data
@@ -37,10 +39,10 @@ class PlayersObject implements IPlayer {
 
     public function __construct() {
         //We're only using this if we're storing players as an array.
-        $this->playersArray = [];
+        //$this->playersArray = [];
 
         //We'll only use this one if we're storing players as a JSON string
-        $this->playerJsonString = null;
+        //$this->playerJsonString = null;
 
         // getting the instance
         $this->helper = new Helper();
@@ -84,28 +86,6 @@ class PlayersObject implements IPlayer {
         {
             return throw new Exception ("Unknown Source");
         }
-        /*
-        switch ($source) {
-            case 'array':
-                $this->playersArray[] = $player;
-                break;
-            case 'json':
-                $players = [];
-                if ($this->playerJsonString) {
-                    $players = json_decode($this->playerJsonString);
-                }
-                $players[] = $player;
-                $this->playerJsonString = json_encode($player);
-                break;
-            case 'file':
-                $players = json_decode($this->getPlayerDataFromFile($filename));
-                if (!$players) {
-                    $players = [];
-                }
-                $players[] = $player;
-                file_put_contents($filename, json_encode($players));
-                break;
-        }*/
     }
 
     function display($isCLI, $source, $filename = null) {
