@@ -57,11 +57,13 @@ class Helper
                 case 'array':
                     if($this->arraysource == null)
                         $this->arraysource = new ArrayData();
+
                     $playerData = $this->arraysource->read();
                     break;
                 case 'json':
                     if($this->jsonsource == null)
                         $this->jsonsource = new JsonData();
+
                     $playerData = $this->jsonsource->read();
                     break;
                 case 'file':
@@ -79,6 +81,35 @@ class Helper
                 $playerData = json_decode($playerData);
             }
             return $playerData;
+        }
+
+        public function writeData($source, $player, $filename = null)
+        {
+
+            switch ($source) 
+            {
+                case 'array':
+                    if($this->arraysource == null)
+                        $this->arraysource = new ArrayData();
+
+                    $this->arraysource->write($player);
+                    break;
+                case 'json':
+                    if($this->jsonsource == null)
+                        $this->jsonsource = new JsonData();
+
+                    $this->jsonsource->write($player);
+                    break;
+                case 'file':
+                    if($this->filesource == null)
+                        $this->filesource = new FileData();
+
+                   $this->filesource->write($player);
+                    break;
+                default:
+                    throw new Exception();
+            }
+            
         }
     }
 

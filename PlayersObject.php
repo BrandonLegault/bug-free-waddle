@@ -52,6 +52,9 @@ class PlayersObject implements IPlayer {
      * @param $filename string Only used if we're reading players in 'file' mode.
      * @return string json
      */
+
+     //This function only returns static values for array and json(because initialized by those values)
+     //if($this->datasource is not null, meaning the object already has Json values. which can be used to read)
     function readPlayers($source, $filename = null) {
 
         $playerData = [];
@@ -71,6 +74,17 @@ class PlayersObject implements IPlayer {
      * @param $player \stdClass Class implementation of the player with name, age, job, salary.
      */
     function writePlayer($source, $player, $filename = null) {
+        
+        try 
+        {
+            $playerData =  $this->helper->getdata($source,$filename);
+        }
+      //catch exception of unknown source
+        catch(Exception $e)
+        {
+            return throw new Exception ("Unknown Source");
+        }
+        /*
         switch ($source) {
             case 'array':
                 $this->playersArray[] = $player;
@@ -91,7 +105,7 @@ class PlayersObject implements IPlayer {
                 $players[] = $player;
                 file_put_contents($filename, json_encode($players));
                 break;
-        }
+        }*/
     }
 
     function display($isCLI, $source, $filename = null) {

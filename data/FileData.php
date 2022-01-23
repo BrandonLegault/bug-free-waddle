@@ -5,6 +5,7 @@ include_once 'ISource.php';
 class FileData implements ISourceData
 {
    private $filename;
+   private $data;
 
    /**
     * @param $filename is the Name of the file (JSON data in this case).
