@@ -108,6 +108,7 @@ class PlayersObject implements IPlayer {
         }
        
         //echo $this->dataFormat->disp($isCLI,$players);
+        // changed the design for displaying content;
 
         if ($isCLI) 
         {

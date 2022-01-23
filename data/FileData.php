@@ -15,12 +15,9 @@ class FileData implements ISourceData
    function __construct($filename)
    {
       $this->path =  __DIR__ .'/'. $filename;
-      //echo $this->path;
       $raw = '';
-      if (file_exists($filename)) 
-         $raw .= file_get_contents($this->path);
-      else
-         file_put_contents($filename, '');
+      $raw .= file_get_contents($this->path);
+      //echo $this->path;
      
       $this->filename = $filename;
       $this->data = $raw ? json_decode($raw) : [];

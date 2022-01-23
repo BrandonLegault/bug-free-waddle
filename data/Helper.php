@@ -102,8 +102,14 @@ class Helper
                     $this->jsonsource->write($player);
                     break;
                 case 'file':
-                    if($this->filesource == null || strcmp( $this->filesource->getFileName(), $filename ) !=0 )
+                    if($this->filesource == null )
                         $this->filesource = new FileData($filename);
+
+                    if(strcmp( $this->filesource->getFileName(), $filename ) !=0 )
+                    {
+                        if (!file_exists($filename)) 
+                            file_put_contents($filename, '');
+                    }
                     
                     //appending to current data, if filename is different a new object is created (i am considereing this case for now)
                     //echo strcmp( $this->filesource->getFileName(), $filename );

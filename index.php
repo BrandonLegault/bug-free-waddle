@@ -8,7 +8,7 @@ $playersObject = new PlayersObject();
 
 $filename = "playerdata.json";
 
-$playersObject->display(php_sapi_name() === 'cli', 'json',$filename);
+$playersObject->display(php_sapi_name() === 'cli', 'file',$filename);
 
 
 $dhar = new \stdClass();
