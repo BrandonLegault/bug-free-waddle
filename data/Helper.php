@@ -68,7 +68,7 @@ class Helper
                     break;
                 case 'file':
                     if($this->filesource == null)
-                        $this->filesource = new FileData();
+                        $this->filesource = new FileData($filename);
 
                     $playerData = $this->filesource->read();
                     break;
@@ -98,12 +98,15 @@ class Helper
                     if($this->jsonsource == null)
                         $this->jsonsource = new JsonData();
 
+                    //appending to current data
                     $this->jsonsource->write($player);
                     break;
                 case 'file':
-                    if($this->filesource == null)
-                        $this->filesource = new FileData();
-
+                    if($this->filesource == null || strcmp( $this->filesource->getFileName(), $filename ) !=0 )
+                        $this->filesource = new FileData($filename);
+                    
+                    //appending to current data, if filename is different a new object is created (i am considereing this case for now)
+                    
                    $this->filesource->write($player);
                     break;
                 default:

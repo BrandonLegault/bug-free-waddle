@@ -77,7 +77,7 @@ class PlayersObject implements IPlayer {
         
         try 
         {
-            $playerData =  $this->helper->getdata($source,$filename);
+            $this->helper->writedata($source, $player, $filename);
         }
       //catch exception of unknown source
         catch(Exception $e)

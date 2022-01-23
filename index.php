@@ -6,6 +6,21 @@ include_once "./PlayersObject.php";
 
 $playersObject = new PlayersObject();
 
-$playersObject->display(php_sapi_name() === 'cli', 'json');
+$filename = "playerdata.json";
+
+$playersObject->display(php_sapi_name() === 'cli', 'file',$filename);
+
+
+$dhar = new \stdClass();
+$dhar->name = 'Gangesh Dhar';
+$dhar->age = 24;
+$dhar->job = 'Center';
+$dhar->salary = '4.66m';
+
+
+
+$playersObject->writePlayer('file',$dhar);
+
+$playersObject->display(php_sapi_name() === 'cli', 'file',$filename);
 
 ?>
