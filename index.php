@@ -2,7 +2,7 @@
 
 //entry point....calls PlayersObject present in Player
 
-include_once "./Player/PlayersObject.php";
+include_once "./Models/PlayersObject.php";
 
 $playersObject = new PlayersObject();
 

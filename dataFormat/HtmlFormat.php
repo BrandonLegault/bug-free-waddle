@@ -1,35 +1,9 @@
 <?php
 
-
-// no longer using this file for viewing data
-
 include_once 'IFormat.php';
-
-class Format implements IFormat
+class HtmlFormat implements IFormat
 {
-
-   private static $instance = null;
-
-   // The constructor is private
-   // to prevent initiation with outer code.
-   private function __construct()
-   {
-       // initialisation goes here
-
-   }
-
-   function cliFormat($players)
-   {
-      $string = "Current Players: \n";
-      foreach ($players as $player) {
-         $string .= "\tName: $player->name\n" .
-            "\tAge: $player->age\n" .
-            "\tSalary: $player->salary\n" .
-            "\tJob: $player->job\n\n";
-      }
-      return $string;
-   }
-   function htmlFormat($players)
+   function disp($players): string
    {
       $players_list = "";
       foreach ($players as $player) {
@@ -71,29 +45,6 @@ class Format implements IFormat
 
       return $final_string;
    }
-   function disp($cli,$players)
-   {
-      if ($cli) 
-      {
-         return $this->cliFormat($players);
-      } 
-      else
-      {
-         return $this->htmlFormat($players);
-      }
-   }
-
-   public static function GetFormat()
-   {
-      if (self::$instance == null)
-      {
-         self::$instance = new Format();
-      }
-   
-   return self::$instance;
-      
-   }
-
 }
 
 ?>

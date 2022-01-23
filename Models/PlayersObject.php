@@ -21,7 +21,9 @@ $dir = dirname(__DIR__, 1);
 //$dir .='/data/Helper.php'
 include_once $dir.'/data/Helper.php';
 include_once 'IPlayer.php';
-include_once $dir.'/dataFormat/Format.php';
+//include_once $dir.'/dataFormat/Format.php';
+include_once $dir.'/dataFormat/CliFormat.php';
+include_once $dir.'/dataFormat/HtmlFormat.php';
 
 class PlayersObject implements IPlayer {
 
@@ -33,8 +35,10 @@ class PlayersObject implements IPlayer {
     //helper class for reading data
     private $helper; 
 
-    // For Formatting data
-    private $dataFormat;
+    // For Formatting data or views
+    //private $dataFormat; removing this style
+    private $cliFormat;
+    private $htmlFormat;
     
 
     public function __construct() {
@@ -46,7 +50,9 @@ class PlayersObject implements IPlayer {
 
         // getting the instance
         $this->helper = new Helper();
-        $this->dataFormat = Format::GetFormat();
+        //$this->dataFormat = Format::GetFormat();
+        $this->cliFormat = new CliFormat();
+        $this->htmlFormat = new HtmlFormat();
     }
 
     /**
@@ -101,7 +107,16 @@ class PlayersObject implements IPlayer {
             return;
         }
        
-        echo $this->dataFormat->disp($isCLI,$players);
+        //echo $this->dataFormat->disp($isCLI,$players);
+
+        if ($isCLI) 
+        {
+          echo $this->cliFormat->disp($players);
+        } 
+        else
+        {
+          echo $this->htmlFormat->disp($players);
+        }
     }
 
 }
